@@ -11,7 +11,7 @@ def __readfile(filepath, delimiter=';'):
 
 
 # metoda która dzieli mi dane na zbiory testowy i treningowy
-def splitdata(filepath, trainfilepath, testfilepath, testowe=10):
+def splitdata(filepath, trainfilepath="trainData.csv", testfilepath="testData.csv", testowe=40):
     try:
         dane = __readfile(filepath)
     except FileNotFoundError:
@@ -37,4 +37,4 @@ def splitdata(filepath, trainfilepath, testfilepath, testowe=10):
 
             for singledata in attrdecyzyjne.get(decisionattr)[testowe:]:
                 testwriter.writerow(singledata + [decisionattr])
-    print("Dane treningowe podzielone na: ",testowe, "danych z każdej grupy jako trening, pozostałe jako testowe")
+    print("Dane treningowe podzielone na: ", testowe, "danych z każdej grupy jako trening, pozostałe jako testowe")
