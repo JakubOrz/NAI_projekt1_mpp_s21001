@@ -2,10 +2,9 @@ import csv
 
 
 # metoda wenątrzna której zadaniem jest czytanie pliku celem dalszej obróbki
-def __readfile(filepath, delimiter=';'):
+def readfile(filepath, delimiter=';'):
     with open(filepath, newline='') as plik:
         dane = list(csv.reader(plik, delimiter=delimiter))
-        # usuwa ostatni pusty element
         dane.pop()
         return dane
 
@@ -13,7 +12,7 @@ def __readfile(filepath, delimiter=';'):
 # metoda która dzieli mi dane na zbiory testowy i treningowy
 def splitdata(filepath, trainfilepath="trainData.csv", testfilepath="testData.csv", testowe=40):
     try:
-        dane = __readfile(filepath)
+        dane = readfile(filepath)
     except FileNotFoundError:
         print("Nie odnaleziono pliku")
         return
