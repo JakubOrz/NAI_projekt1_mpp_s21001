@@ -13,7 +13,35 @@ def __nametagdata(vektor1, vektor2):
     # do policzonej odległości dopisuję kategorię jakiej się tyczy
 
 
-def __createdistancelist(vectorslist, vector0, k=3):
+def __createdistancelist(vectorslist, vector0, k):
     distanceList = [__nametagdata(vektor, vector0) for vektor in vectorslist]
     return sorted(distanceList, key=lambda l: l[-1])[:k]
 # funkcja tworzy listę k najbliższych wektorów względem wektora zerowego domyślnie k wynosi 3
+
+
+def __decide(closestVectors):
+    decisionssttr = dict()
+    for vector in closestVectors:
+        if decisionssttr.get(vector[0]) is None:
+            decisionssttr[vector[0]]=0
+        decisionssttr[vector[0]]+=1
+
+    return sorted(decisionssttr,key= lambda el: el[1],reverse=False)[0]
+
+
+def wybierzKwiatek(data,vector,k=3):
+    return __decide(__createdistancelist(data,vector,k))
+
+
+def testSkutecznosci(daneTreningowe,daneTestowe,k=3, fullRaport = False, wynikProcentowy = False):
+    skuteczne = 0
+    for przypadek in daneTestowe:
+        rezultat = wybierzKwiatek(daneTreningowe,przypadek[:-1],k)
+        if rezultat == przypadek[-1]:
+            skuteczne+=1
+        if fullRaport:
+            print("Oczekiwano: ",przypadek[-1]," otrzymano: ",rezultat," zgodność: ", rezultat==przypadek[-1])
+    if wynikProcentowy:
+        return ""+str(round(skuteczne/len(daneTestowe)*100,2))+"%"
+    else:
+        return skuteczne/len(daneTestowe)
