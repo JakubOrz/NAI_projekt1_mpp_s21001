@@ -1,23 +1,10 @@
 import sys
-import myFileReader
-import kNNcore
-from controller import Controller
+from mojebiblioteki import plotDrawer
+from mojebiblioteki.controller import Controller
 from PyQt5.QtWidgets import QApplication, QWidget
-from PyQt5.QtWidgets import QLineEdit, QPushButton, QHBoxLayout, QMessageBox
-from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QLabel, QGridLayout
 from PyQt5.QtWidgets import QInputDialog
-#
-# PATH = "/home/jakub/Uczelnia/NAI/MPP/MPP 1/danetreningowe.csv"
-# PATH2 = "/home/jakub/Uczelnia/NAI/MPP/MPP 1/danetestowe1.csv"
-# PATH3 = "treningowe.csv"
-# dane = myFileReader.readfile(PATH)
-# testowe = myFileReader.__readfile(PATH+"danetestowe1.csv")
-#
-#
-# kontroler = Controller(dane)
-# kontroler.testyourself(testowe,4,False,True)
-
 
 class Menu(QWidget):
 
@@ -39,21 +26,27 @@ class Menu(QWidget):
 
         funkcje = {'Dodaj zbior treningowy':self.controller.learn,
                    'Dodaj zbior testowy':self.controller.train,
-                   'Zmien parametr k':self.controller.changeK,
+                   'Zmien parametr k':self.controller.changek,
                    'Zmien delimiter':self.controller.changedelimiter,
                    'Zresetuj zbior treningowy':self.controller.resettraining,
                    'Zresetuj zbior testowy': self.controller.resettest,
                    'Ocen kwiatek': self.controller.ocena,
                    'Ocen skutecznosc':self.controller.testyourself,
-                   'Dodaj kwiatek':self.controller.addcase
+                   'Dodaj kwiatek':self.controller.addcase,
+                   'Wykres k -> dokladnosc':self.controller.wykresacc
                    }
 
         try:
             callbackdata = funkcje.get(sender.text())()
 
             self.learntcount.setText(str(self.controller))
-            self.outputdata.setText(callbackdata)
-        except Exception as ex1:
+
+            if isinstance(callbackdata,dict):
+                w = plotDrawer.Wykres(callbackdata, name="Wykres zależności dokładności od k")
+            else:
+                self.outputdata.setText(callbackdata)
+
+        except ValueError as ex1:
             self.outputdata.setText(str(ex1))
 
     def interfejs(self, controller):
@@ -76,6 +69,7 @@ class Menu(QWidget):
         guziczki.append(QPushButton("Ocen skutecznosc",self))
         guziczki.append(QPushButton("Dodaj zbior treningowy", self))
         guziczki.append(QPushButton("Dodaj zbior testowy",self))
+        guziczki.append(QPushButton("Wykres k -> dokladnosc", self))
         guziczki.append(QPushButton("Dodaj kwiatek", self))
         guziczki.append(QPushButton("Zmien parametr k", self))
         guziczki.append(QPushButton("Zmien delimiter", self))

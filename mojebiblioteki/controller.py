@@ -46,7 +46,7 @@ class Controller:
         self.trainingset.extend(myFileReader.readfile(path, delimiter=self.delimiter))
         return "Nauka z pliku zakończona pomyślnie"
 
-    def changeK(self):
+    def changek(self):
         paramk, cancel = self.parent.collectdata("Zmiana k", "Podaj nowe K")
         if cancel and paramk < 0:
             return
@@ -103,12 +103,35 @@ class Controller:
             return "Pusty zbiór treningowy"
 
         vektor, cancel = self.parent.collectdata("Testowanie Irysa",
-                                                 f"Podaj {len(self.dane[0]) - 1} parametry kwiatka oddzielone {self.delimiter} ")
+                                                 f"Podaj {len(self.dane[0]) - 1} parametry"
+                                                 f" kwiatka oddzielone {self.delimiter} ")
+        if cancel:
+            return
 
         clearvektor = self._makevector(vektor)
         if len(self.dane[0]) != len(clearvektor) + 1:
             return "Nieprawidłowa ilość parametrów"
 
+        return kNNcore.wybierzKwiatek(self.dane, clearvektor)
+
+    def wykresacc(self):
+
+        dane, cancel = self.parent.collectdata("Przygotowywanie wykresu",
+                                               f"Podaj przedział kMIN{self.delimiter}kMAX dla którego rysować mam "
+                                               f"rysować wykres")
         if cancel:
             return
-        return kNNcore.wybierzKwiatek(self.dane, clearvektor)
+
+        przedzial = dane.split(self.delimiter)
+
+        if len(przedzial) != 2:
+            return
+
+        if int(przedzial[0]) < 1 or int(przedzial[1]) < int(przedzial[0]):
+            return
+
+        wyniki = dict()
+        for k in range(int(przedzial[0]), int(przedzial[1]), 1):
+            wyniki[k] = kNNcore.testSkutecznosci(self.dane, self.trainingset, k, fullRaport=False,
+                                                 wynikProcentowy=False)
+        return wyniki
