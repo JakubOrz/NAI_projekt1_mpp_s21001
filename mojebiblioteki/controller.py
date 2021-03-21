@@ -1,5 +1,5 @@
-import kNNcore
-import myFileReader
+from mojebiblioteki import kNNcore
+from mojebiblioteki import myFileReader
 
 
 class Controller:

@@ -46,8 +46,8 @@ class Menu(QWidget):
             else:
                 self.outputdata.setText(callbackdata)
 
-        except ValueError as ex1:
-            self.outputdata.setText(str(ex1))
+        except Exception as ex1:
+            self.outputdata.setText("Błąd! "+str(ex1))
 
     def interfejs(self, controller):
 
