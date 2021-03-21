@@ -10,7 +10,7 @@ def readfile(filepath, delimiter=';'):
 
 
 # metoda która dzieli mi dane na zbiory testowy i treningowy
-def splitdata(filepath, trainfilepath="trainData.csv", testfilepath="testData.csv", testowe=40):
+def splitcsvdata(filepath, trainfilepath="trainData.csv", testfilepath="testData.csv", testowe=40):
     try:
         dane = readfile(filepath)
     except FileNotFoundError:
