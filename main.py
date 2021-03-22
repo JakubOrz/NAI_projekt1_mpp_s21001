@@ -1,5 +1,5 @@
 import sys
-from mojebiblioteki import plotDrawer
+from mojebiblioteki import plotDrawer2
 from mojebiblioteki.controller import Controller
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtWidgets import QPushButton
@@ -43,7 +43,8 @@ class Menu(QWidget):
             self.learntcount.setText(str(self.controller))
 
             if isinstance(callbackdata,dict):
-                w = plotDrawer.Wykres(callbackdata, name="Wykres zależności dokładności od k")
+                # w = plotDrawer.Wykres(callbackdata, name="Wykres zależności dokładności od k")
+                plotDrawer2.drawplot(callbackdata, nazwa="Wykres zależności dokładności od k",osX="Parametr K",osY="Accuracy")
             else:
                 self.outputdata.setText(callbackdata)
 
