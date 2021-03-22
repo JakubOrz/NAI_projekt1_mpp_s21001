@@ -5,7 +5,6 @@ import csv
 def readfile(filepath, delimiter=';'):
     with open(filepath, newline='') as plik:
         dane = list(csv.reader(plik, delimiter=delimiter))
-        dane.pop()
         return dane
 
 

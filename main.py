@@ -10,10 +10,10 @@ class Menu(QWidget):
 
     def __init__(self, argsy, parent=None):
         super().__init__(parent)
-        if len(argsy) == 3:
-            self.controller = Controller(self, argsy[0], argsy[1], argsy[2])
+        if len(argsy) == 4:
+            self.controller = Controller(parent=self, initk= argsy[1], inittata= argsy[2], trainingset= argsy[3])
         else:
-            self.controller = Controller(self)
+            self.controller = Controller(parent=self)
         self.interfejs(self.controller)
 
 
@@ -75,6 +75,7 @@ class Menu(QWidget):
         guziczki.append(QPushButton("Zmien delimiter", self))
         guziczki.append(QPushButton("Zresetuj zbior treningowy", self))
         guziczki.append(QPushButton("Zresetuj zbior testowy", self))
+        guziczki.append(QPushButton("Podziel dane na zbiory",self))
 
         for i, guzik in enumerate(guziczki):
             guzik.clicked.connect(self.handlebutton)
@@ -85,5 +86,5 @@ class Menu(QWidget):
         self.show()
 
 app = QApplication(sys.argv)
-okno = Menu(sys.argv[1:])
+okno = Menu(sys.argv)
 sys.exit(app.exec_())

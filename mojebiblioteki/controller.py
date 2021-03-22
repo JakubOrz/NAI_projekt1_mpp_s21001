@@ -6,11 +6,13 @@ class Controller:
 
     def __init__(self, parent, initk=3, inittata=None, trainingset=None):
         if inittata is None:
-            inittata = list()
+            self.dane = list()
+        else:
+            self.dane = myFileReader.readfile(inittata, ';')
         if trainingset is None:
-            trainingset = list()
-        self.dane = myFileReader.readfile(inittata, ';')
-        self.trainingset = myFileReader.readfile(trainingset, ';')
+            self.trainingset = list()
+        else:
+            self.trainingset = myFileReader.readfile(trainingset, ';')
         self.parent = parent
         self.paramK = int(initk)
         self.delimiter = ';'
