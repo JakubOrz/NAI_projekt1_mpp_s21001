@@ -50,7 +50,7 @@ class Controller:
 
     def changek(self):
         paramk, cancel = self.parent.collectdata("Zmiana k", "Podaj nowe K")
-        if cancel or paramk < 0:
+        if cancel or int(paramk) < 0:
             return
         self.paramK = int(paramk)
         return f"Parametr k zmieniony na {self.paramK}"
@@ -90,7 +90,7 @@ class Controller:
         self.dane.extend([clearvector])
         return "Dodano element do zbioru treningowego"
 
-    def getdata(self):
+    def _getdata(self):
         return self.dane
 
     def testyourself(self):
