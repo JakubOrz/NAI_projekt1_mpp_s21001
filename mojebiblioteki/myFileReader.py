@@ -5,11 +5,13 @@ import csv
 def readfile(filepath, delimiter=';'):
     with open(filepath, newline='') as plik:
         dane = list(csv.reader(plik, delimiter=delimiter))
+        if len(dane[-1]) != len(dane[-2]):
+            dane.pop()
         return dane
 
 
 # metoda która dzieli mi dane na zbiory testowy i treningowy
-def splitcsvdata(filepath, trainfilepath="trainData.csv", testfilepath="testData.csv", testowe=40):
+def splitcsvdata(filepath, trainfilepath="trainData.csv", testfilepath="testData.csv", testowe=10):
     try:
         dane = readfile(filepath)
     except FileNotFoundError:
@@ -35,4 +37,4 @@ def splitcsvdata(filepath, trainfilepath="trainData.csv", testfilepath="testData
 
             for singledata in attrdecyzyjne.get(decisionattr)[testowe:]:
                 testwriter.writerow(singledata + [decisionattr])
-    print("Dane treningowe podzielone na: ", testowe, "danych z każdej grupy jako trening, pozostałe jako testowe")
+    return f"Dane treningowe podzielone na: {testowe} danych z każdej grupy jako trening, pozostałe jako testowe"

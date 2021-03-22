@@ -33,7 +33,8 @@ class Menu(QWidget):
                    'Ocen kwiatek': self.controller.ocena,
                    'Ocen skutecznosc':self.controller.testyourself,
                    'Dodaj kwiatek':self.controller.addcase,
-                   'Wykres k -> dokladnosc':self.controller.wykresacc
+                   'Wykres k -> dokladnosc':self.controller.wykresacc,
+                   'Podziel dane na zbiory':self.controller.przelamdane
                    }
 
         try:

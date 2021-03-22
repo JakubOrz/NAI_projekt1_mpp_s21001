@@ -50,7 +50,7 @@ class Controller:
 
     def changek(self):
         paramk, cancel = self.parent.collectdata("Zmiana k", "Podaj nowe K")
-        if cancel and paramk < 0:
+        if cancel or paramk < 0:
             return
         self.paramK = int(paramk)
         return f"Parametr k zmieniony na {self.paramK}"
@@ -137,3 +137,27 @@ class Controller:
             wyniki[k] = kNNcore.testSkutecznosci(self.dane, self.trainingset, k, fullRaport=False,
                                                  wynikProcentowy=False)
         return wyniki
+
+    def przelamdane(self):
+
+        danepath, cancel = self.parent.collectdata("Przygotowywanie danych",
+                                               f"Podaj ścieżkę do pliku csv z danymi")
+        if cancel:
+            return
+
+        trainpath, cancel = self.parent.collectdata("Przygotowywanie danych",
+                                                   f"Podaj ścieżkę gdzie utworzyć zbiór treningowy")
+        if cancel:
+            return
+
+        testpath, cancel = self.parent.collectdata("Przygotowywanie danych",
+                                                    f"Podaj ścieżkę gdzie utworzyć zbiór testowy")
+        if cancel:
+            return
+
+        ilosc, cancel = self.parent.collectdata("Przygotowywanie danych",
+                                                   f"Podaj ilość danych dla każdego atrybutu decyzyjnego")
+        if cancel:
+            return
+
+        return myFileReader.splitcsvdata(danepath, trainfilepath=trainpath, testfilepath=testpath, testowe=int(ilosc))
