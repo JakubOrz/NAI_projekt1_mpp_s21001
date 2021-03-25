@@ -29,7 +29,7 @@ class ButtonMenu(QWidget):
         text, ok = QInputDialog.getText(self, inputname, message)
         return text, not ok
 
-    def showdata(self, outputdata, important = False):
+    def showdata(self, outputdata, important=False):
         if important:
             msgBox = QMessageBox()
             msgBox.setText(outputdata)
