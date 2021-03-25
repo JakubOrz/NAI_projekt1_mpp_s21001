@@ -18,6 +18,14 @@ def __createdistancelist(vectorslist, vector0, k):
     return sorted(distanceList, key=lambda l: l[-1])[:k]
 # funkcja tworzy listę k najbliższych wektorów względem wektora zerowego domyślnie k wynosi 3
 
+def __maxelement(slownik):
+    assert isinstance(slownik, dict)
+    klucze = [*slownik]
+    best = klucze[0]
+    for klucz in klucze[1:]:
+        if slownik[klucz] > slownik[best]:
+            best = klucz
+    return best
 
 def __decide(closestVectors):
     decisionssttr = dict()
@@ -26,7 +34,7 @@ def __decide(closestVectors):
             decisionssttr[vector[0]]=0
         decisionssttr[vector[0]]+=1
 
-    return sorted(decisionssttr,key= lambda el: el[1],reverse=False)[0]
+    return __maxelement(decisionssttr)
 
 
 def wybierzKwiatek(data,vector,k=3):

@@ -43,8 +43,8 @@ class Menu(QWidget):
             self.learntcount.setText(str(self.controller))
 
             if isinstance(callbackdata,dict):
-                # w = plotDrawer.Wykres(callbackdata, name="Wykres zależności dokładności od k")
-                plotDrawer2.drawplot(callbackdata, nazwa="Wykres zależności dokładności od k",osX="Parametr K",osY="Accuracy")
+                plotDrawer2.drawplot(callbackdata, nazwa="Wykres zależności dokładności od k", osx="Parametr K",
+                                     osy="Accuracy")
             else:
                 self.outputdata.setText(callbackdata)
 
